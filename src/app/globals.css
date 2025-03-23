@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --background-card: oklch(0.442 0.017 285.786);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-background-card: var(--background-card);
+  --background: #f9f9f9;
+  --background-secondary: #efefef;
+  --foreground: #1a1a1a;
+  --text: #131313;
+  --text-secondary: #4a4a4a;
+  --text-muted: #7a7a7a;
+  
+  --background-card: #ffffff;
+  --background-card-hover: #f0f0f0;
+  --button: #007aff;
+  --button-hover: #005fcc;
+  --button-text: #ffffff;
+  --border: #d6d6d6;
+  --shadow: rgba(0, 0, 0, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --background-card: oklch(0.442 0.017 285.786);
+    --background: #0e0e0e;
+    --background-secondary: #1b1b1b;
+    --foreground: #e3e3e3;
+    --text: #f8f8f8;
+    --text-secondary: #bdbdbd;
+    --text-muted: #8c8c8c;
+
+    --background-card: #181818;
+    --background-card-hover: #242424;
+    --button: #0a84ff;
+    --button-hover: #0066cc;
+    --button-text: #ffffff;
+    --border: #404040;
+    --shadow: rgba(255, 255, 255, 0.06);
   }
 }
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground: var(--foreground);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-background-card: var(--background-card);
+  --color-background-card-hover: var(--background-card-hover);
+  --color-button: var(--button);
+  --color-button-hover: var(--button-hover);
+  --color-button-text: var(--button-text);
+  --color-border: var(--border);
+  --color-shadow: var(--shadow);
+}
+
+
 
 body {
   background: var(--background);
@@ -35,16 +68,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background-dark);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
   background: var(--background-card);
   border-radius: 5px;
 }
 
+::-webkit-scrollbar-thumb {
+  background: var(--background-card-hover);
+  border-radius: 5px;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--background-light);
+  background: var(--background-card);
   border-radius: 5px;
 }

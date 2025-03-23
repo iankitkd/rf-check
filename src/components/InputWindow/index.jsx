@@ -5,7 +5,7 @@ import { useState } from "react";
 import CheckButton from "./CheckButton";
 import Categories from "./Categories";
 
-const customColors = {
+const borderColors = {
     "": "border-gray-500/50",
     "real": "border-green-500",
     "fake": "border-red-500",
@@ -65,10 +65,10 @@ export default function InputWindow({setMessage}) {
                 <textarea 
                 name="inputText" 
                 id="inputText"
-                placeholder="Enter text here, let's check if it's real or fake !" 
+                placeholder="Enter text here, let's check if it's real or fake!" 
                 value={text}
                 onChange={handleTextChange}
-                className={`w-full h-full p-2 rounded-lg resize-none outline-0 border-2 ${customColors[result]}`}
+                className={`w-full h-full p-2 rounded-lg bg-background-card shadow-lg resize-none outline-0 border-2 ${borderColors[result]}`}
                 />
             </div>
         )}

@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown"
 
 import Rating from "./Rating";
 
-const code = {
+const colorCode = {
   "": 0,
   "real": 1,
   "fake": 2,
@@ -10,11 +10,11 @@ const code = {
   "neutral": 4,
 }
 
-const colors = {
+const backgroundColors = {
   "": "bg-gray-500/50",
   "real": "bg-green-600",
-  "fake": "bg-red-600",
-  "half-truth": "bg-orange-600",
+  "fake": "bg-red-500",
+  "half-truth": "bg-orange-500",
   "neutral": "bg-gray-600",
 }
 
@@ -25,11 +25,11 @@ export default function OutputWindow({message}) {
   return (
     <section className="lg:w-[50%] h-[calc(100vh-40px)] flex flex-col items-center">
         <div className="h-21 w-full px-2 flex items-center justify-around gap-1">
-          <div className={`font-semibold text-lg capitalize  px-4 py-1 rounded-lg ${colors[classification]}`}>{classification}</div>
+          <div className={`font-semibold text-lg capitalize px-4 py-1 rounded-lg text-button-text  ${backgroundColors[classification]}`}>{classification}</div>
           {type === "opinion" && (<div className={`font-semibold text-lg capitalize px-4 py-1 rounded-lg bg-gray-500/50`}>{type}</div>)}
           {score && (
             <div className="flex flex-col items-center justify-center">
-              <Rating rating={score} color={code[classification]} />
+              <Rating rating={score} color={colorCode[classification]} />
               <h2 className="text-sm font-semibold">Score</h2>
             </div>
           )}
@@ -38,14 +38,14 @@ export default function OutputWindow({message}) {
         <h2 className="text-lg font-medium mt-2 r px-2">Detail Response</h2>
 
         <div className="w-full h-fit max-w-[90%] md:max-w-[70%] max-h-[45%] py-2">
-          <div className={`w-full h-full p-2 rounded-lg border border-gray-500/50 overflow-y-auto`}>
+          <div className={`w-full h-full p-2 rounded-lg border border-gray-500/50 bg-background-card shadow-lg overflow-y-auto`}>
             <ReactMarkdown>
               {justification}
             </ReactMarkdown>
           </div>
         </div>
 
-        <div className="w-full max-w-[90%] md:max-w-[70%] p-2 flex flex-col gap-1">
+        <div className="w-full max-w-[90%] md:max-w-[70%] p-2 flex flex-col gap-1 text-text-secondary">
           {sourceURL && (
             <div className="flex gap-2 items-center">
               <span>Source:</span>
@@ -63,7 +63,7 @@ export default function OutputWindow({message}) {
               <div className="flex gap-2 items-start">
                 <span>Keywords:</span>
                 <div className="flex gap-1 flex-wrap">
-                  { keywords.map((ele) => (<span key={ele} className="text-sm h-fit bg-background-card px-1 rounded-lg capitalize">{ele}</span>))
+                  { keywords.map((ele) => (<span key={ele} className="text-sm h-fit bg-background-secondary px-1 rounded-lg capitalize">{ele}</span>))
                   }
                 </div>
               </div>
