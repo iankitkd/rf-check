@@ -57,7 +57,7 @@ export default function InputWindow({setMessage}) {
         {/* Category Selection */}
         <Categories selectedMode={selectedMode} setSelectedMode={setSelectedMode} />
 
-        <h2 className="text-lg font-medium mt-2 text-center px-6">Analyze text or image to determine its authenticiy.</h2>
+        <h1 className="text-lg font-medium mt-2 text-center px-6">Analyze text or image to determine its authenticiy.</h1>
 
         {/* Text area */}
         { selectedMode === "text" && (
