@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 
-import { CiTextAlignLeft } from "react-icons/ci";
-import { MdImage } from "react-icons/md";
-import { BsStars } from "react-icons/bs";
+import CheckButton from "./CheckButton";
+import Categories from "./Categories";
 
 const customColors = {
     "": "border-gray-500/50",
@@ -19,14 +18,14 @@ export default function InputWindow({setMessage}) {
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState("");
-    const [isOpinionBased, setIsOpinionBased] = useState(false);
+    const [isButtonAvailable, setIsButtonAvailable] = useState(false);
     
     const handleCheckBtnClick = async () => {
         if(!text.trim()) {
             return;
         }
-        setLoading(true);
         try {
+            setLoading(true);
             const response = await fetch(`/api/check`, {
                 method: "POST",
                 headers: {
@@ -35,50 +34,28 @@ export default function InputWindow({setMessage}) {
                 body: JSON.stringify({ text: text.trim() }),
             });
             const {message} = await response.json();
-            setResult(message[3])
-            setMessage(message[4]);
-            if(message[1] !== "fact") {
-                setIsOpinionBased(true);
-            }
-            console.log(message, "res client")
+            setMessage(message);
+            setResult(message.classification);
         } catch (error) {
             console.log("Error", error);
+        } finally {
+            setIsButtonAvailable(false);
+            setLoading(false);
         }
-       
-        setLoading(false);
     }
 
     const handleTextChange = (e) => {
         setText(e.target.value);
         setResult("");
         setMessage("");
+        setIsButtonAvailable(true);
     }
 
   return (
     <section className="lg:w-[50%] h-[480px] flex flex-col items-center">
 
         {/* Category Selection */}
-        <div className="flex items-center gap-3 p-2 h-21">
-            <button 
-            className={`flex flex-col items-center cursor-pointer hover:bg-zinc-700 min-w-16 py-1 rounded-lg 
-                    ${selectedMode == "text" && "bg-zinc-700"}`}
-            onClick={() => setSelectedMode("text")}
-            >
-                <CiTextAlignLeft size={32} className="p-1 bg-background-card rounded-lg mb-0.5" />
-                <span>Text</span>
-            </button>
-
-            <span className="px-2 text-sm font-medium text-gray-500 ">OR</span>
-
-            <button 
-            className={`flex flex-col items-center cursor-pointer hover:bg-zinc-700 min-w-16 py-1 rounded-lg 
-                    ${selectedMode == "image" && "bg-zinc-700"}`}
-            onClick={() => setSelectedMode("image")}
-            >
-                <MdImage size={32} className="p-1 bg-background-card rounded-lg mb-0.5" />
-                <span>Image</span>
-            </button>
-        </div>
+        <Categories selectedMode={selectedMode} setSelectedMode={setSelectedMode} />
 
         <h2 className="text-lg font-medium mt-2 text-center px-6">Analyze text or image to determine its authenticiy.</h2>
 
@@ -104,19 +81,8 @@ export default function InputWindow({setMessage}) {
         )}
 
         {/* Check Button */}
-        {text && (
-            <div>
-                <button 
-                className="py-2 px-3 rounded-lg bg-background-card hover:bg-zinc-700"
-                onClick={handleCheckBtnClick}
-                disabled={loading}
-                >
-                    {!loading ? 
-                    <span className="flex items-center gap-1"><BsStars /> <p>Check Now</p></span> 
-                    : <p>Analyzing ...</p>
-                    }
-                </button>
-            </div>
+        {isButtonAvailable && text && (
+            <CheckButton loading={loading} handleCheckBtnClick={handleCheckBtnClick} />
         )}
     </section>
   )
