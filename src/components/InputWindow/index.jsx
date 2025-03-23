@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import CheckButton from "./CheckButton";
 import Categories from "./Categories";
+import ImageInput from "./ImageInput";
 
 const borderColors = {
     "": "border-gray-500/50",
@@ -75,9 +76,7 @@ export default function InputWindow({setMessage}) {
 
         {/* Image area */}
         { selectedMode == "image" && (
-            <div className="w-full h-full max-w-[90%] md:max-w-[70%] max-h-[50%] py-2">
-
-            </div>
+            <ImageInput setText={setText} setIsButtonAvailable={setIsButtonAvailable} />
         )}
 
         {/* Check Button */}

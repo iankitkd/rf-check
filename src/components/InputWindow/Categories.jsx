@@ -3,7 +3,7 @@ import { MdImage } from "react-icons/md";
 
 const items = [
     {id: 1, title: "Text", mode: "text", Icon: CiTextAlignLeft},
-    {id: 2, title: "Image", mode: "iamge", Icon: MdImage},
+    {id: 2, title: "Image", mode: "image", Icon: MdImage},
 ]
 
 export default function Categories({selectedMode, setSelectedMode}) {
