@@ -30,7 +30,7 @@ export default function ImageInput({loading, result, setResult, setMessage, hand
             return;
         }
         const fileExtension = selectedFile.name.split('.').pop().toLowerCase(); 
-        if(!["bmp", "jpg", "png", "pbm", "webp"].includes(fileExtension)) {
+        if(!["bmp", "jpg", "jpeg", "png", "pbm", "webp"].includes(fileExtension)) {
             return;
         }
         setImage(URL.createObjectURL(selectedFile));
@@ -43,6 +43,7 @@ export default function ImageInput({loading, result, setResult, setMessage, hand
             const processedImage = await preprocessImage(image);
             const worker = await createWorker('eng');
             const { data: { text } } = await worker.recognize(processedImage);
+            console.log("text", text);
             return text;
         } catch (error) {
             console.log(error);
