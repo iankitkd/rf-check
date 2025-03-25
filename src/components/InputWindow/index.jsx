@@ -2,26 +2,18 @@
 
 import { useState } from "react";
 
-import CheckButton from "./CheckButton";
 import Categories from "./Categories";
 import ImageInput from "./ImageInput";
+import TextInput from "./TextInput";
 
-const borderColors = {
-    "": "border-gray-500/50",
-    "real": "border-green-500",
-    "fake": "border-red-500",
-    "half-truth": "border-orange-500",
-    "neutral": "border-gray-500",
-}
 
 export default function InputWindow({setMessage}) {
     const [selectedMode, setSelectedMode] = useState("text");
-    const [text, setText] = useState("");
+    
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState("");
-    const [isButtonAvailable, setIsButtonAvailable] = useState(false);
-    
-    const handleCheckBtnClick = async () => {
+
+    const handleCheckBtnClick = async (text) => {
         if(!text.trim()) {
             return;
         }
@@ -40,17 +32,11 @@ export default function InputWindow({setMessage}) {
         } catch (error) {
             console.log("Error", error);
         } finally {
-            setIsButtonAvailable(false);
             setLoading(false);
         }
     }
 
-    const handleTextChange = (e) => {
-        setText(e.target.value);
-        setResult("");
-        setMessage("");
-        setIsButtonAvailable(true);
-    }
+    
 
   return (
     <section className="lg:w-[50%] h-[480px] flex flex-col items-center">
@@ -62,27 +48,26 @@ export default function InputWindow({setMessage}) {
 
         {/* Text area */}
         { selectedMode === "text" && (
-            <div className="w-full h-full max-w-[90%] md:max-w-[70%] max-h-[55%] py-2">
-                <textarea 
-                name="inputText" 
-                id="inputText"
-                placeholder="Enter text here, let's check if it's real or fake!" 
-                value={text}
-                onChange={handleTextChange}
-                className={`w-full h-full p-2 rounded-lg bg-background-card shadow-lg resize-none outline-0 border-2 ${borderColors[result]}`}
-                />
-            </div>
+            <TextInput
+            loading={loading}
+            result={result}
+            setResult={setResult}
+            setMessage={setMessage}
+            handleCheckBtnClick={handleCheckBtnClick}
+            />
         )}
 
         {/* Image area */}
         { selectedMode == "image" && (
-            <ImageInput setText={setText} setIsButtonAvailable={setIsButtonAvailable} />
+            <ImageInput 
+            loading={loading}
+            result={result}
+            setResult={setResult}
+            setMessage={setMessage}
+            handleCheckBtnClick={handleCheckBtnClick}
+            />
         )}
-
-        {/* Check Button */}
-        {isButtonAvailable && text && (
-            <CheckButton loading={loading} handleCheckBtnClick={handleCheckBtnClick} />
-        )}
+        
     </section>
   )
 }

@@ -1,7 +1,7 @@
 
 import { BsStars } from "react-icons/bs";
 
-export default function CheckButton({loading, handleCheckBtnClick}) {
+export default function CheckButton({loading, loadingText="Analyzing...", handleCheckBtnClick}) {
   return (
     <div>
         <button 
@@ -11,7 +11,7 @@ export default function CheckButton({loading, handleCheckBtnClick}) {
         >
             {!loading ? 
             <span className="flex items-center gap-1"><BsStars /> <p>Check Now</p></span> 
-            : <p>Analyzing ...</p>
+            : <p>{loadingText}</p>
             }
         </button>
     </div>
