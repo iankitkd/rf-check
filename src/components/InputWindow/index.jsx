@@ -9,6 +9,7 @@ import TextInput from "./TextInput";
 
 export default function InputWindow({setMessage}) {
     const [selectedMode, setSelectedMode] = useState("text");
+    const [model, setModel] = useState("gemini");
     
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState("");
@@ -24,7 +25,7 @@ export default function InputWindow({setMessage}) {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ text: text.trim() }),
+                body: JSON.stringify({ text: text.trim(), model: model }),
             });
             const {message} = await response.json();
             setMessage(message);
@@ -54,6 +55,8 @@ export default function InputWindow({setMessage}) {
             setResult={setResult}
             setMessage={setMessage}
             handleCheckBtnClick={handleCheckBtnClick}
+            model={model}
+            setModel={setModel}
             />
         )}
 

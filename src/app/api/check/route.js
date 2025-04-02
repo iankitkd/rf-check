@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = process.env.API_KEY;
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // const text = "earth is flat"
 
@@ -28,37 +30,73 @@ Return the response in valid JSON format exactly as follows (not make this respo
 
 export async function POST(request) {
     try {
-        const { text } = await request.json()
+        const { text, model } = await request.json()
 
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${API_KEY}`,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              "model": "deepseek/deepseek-r1:free",
-              "messages": [
-                {
-                  "role": "user",
-                  "content": `Text: ${text} \n${prompt}`
-                }
-              ]
-            })
-        });
-
-        const data = await response.json();
-        const rawString = data.choices[0].message.content;
-        console.log(rawString, "api");
-        if(!rawString) {
-          return NextResponse.json({error: "No response found"}, {status: 500});
+        let message = "";
+        if(model === "deepseek") {
+          message = await deepseekCheck(text);
+        } else if(model === "gemini") {
+          message = await geminiCheck(text);
         }
-        const jsonString = rawString.replace(/```json|```/g, "").trim();
-        const message = JSON.parse(jsonString);
+        else {
+          return NextResponse.json({error: "Invalid model"}, {status: 400});
+        }
 
         return NextResponse.json({ message }, {status: 200})
     } catch (error) {
         console.log(error);
         return NextResponse.json({error}, {status: 500});
     }
+}
+
+async function deepseekCheck(text) {
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "model": "deepseek/deepseek-r1:free",
+          "messages": [
+            {
+              "role": "user",
+              "content": `Text: ${text} \n${prompt}`
+            }
+          ]
+        })
+    });
+    const data = await response.json();
+    const rawString = data.choices[0].message.content;
+    console.log(rawString, "api");
+    if(!rawString) {
+      return NextResponse.json({error: "No response found"}, {status: 500});
+    }
+    const jsonString = rawString.replace(/```json|```/g, "").trim();
+    const message = JSON.parse(jsonString);
+    return message;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+async function geminiCheck(text) {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: `Text: ${text} \n${prompt}`,
+    });
+    const rawString = response.text;
+    console.log(rawString, "gemini");
+    if(!rawString) {
+      return NextResponse.json({error: "No response found"}, {status: 500});
+    }
+    const jsonString = rawString.replace(/```json|```/g, "").trim();
+    const message = JSON.parse(jsonString);
+    return message;
+  } catch (error) {
+    throw new Error(error);
+  }
+    
 }
