@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { InputWindow, OutputWindow } from ".";
+import { InputSection, OutputSection } from ".";
 
 export default function CheckerWindow() {
 
@@ -10,9 +10,9 @@ export default function CheckerWindow() {
 
   return (
     <main className="flex flex-col lg:flex-row min-h-[calc(100vh-40px)]">
-      <InputWindow setMessage={setMessage} />
+      <InputSection setMessage={setMessage} />
       { message && Object.keys(message).length != 0 && 
-        <OutputWindow message={message} />
+        <OutputSection message={message} />
       }
     </main>
   )

@@ -1,13 +1,13 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import CheckerWindow from "./CheckerWindow";
-import InputWindow from "./InputWindow";
-import OutputWindow from "./OutputWindow";
+import CheckerSection from "./CheckerSection";
+import InputSection from "./InputSection";
+import OutputSection from "./OutputSection";
 
 export {
     Header,
     Footer,
-    CheckerWindow,
-    InputWindow, 
-    OutputWindow,
+    CheckerSection,
+    InputSection, 
+    OutputSection,
 }

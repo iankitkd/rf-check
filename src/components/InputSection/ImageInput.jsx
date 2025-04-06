@@ -2,6 +2,7 @@ import Tesseract from "tesseract.js";
 import { useState } from "react";
 
 import CheckButton from "./CheckButton";
+import ModelsOptions from "./ModelsOptions";
 import { preprocessImage } from "@/utils/preprocessImage";
 
 const borderColors = {
@@ -12,7 +13,7 @@ const borderColors = {
     "neutral": "border-gray-500",
 }
 
-export default function ImageInput({loading, result, setResult, setMessage, handleCheckBtnClick}) {
+export default function ImageInput({loading, result, setResult, setMessage, handleCheckBtnClick, model, setModel}) {
     const [image, setImage] = useState("");
     const [loadingExtract, setLoadingExtract] = useState(false);
 
@@ -82,11 +83,14 @@ export default function ImageInput({loading, result, setResult, setMessage, hand
     </div>
 
     { image && !result && (
+    <div className="relative flex items-center">
         <CheckButton 
         loading={loading || loadingExtract} 
         loadingText={loadingExtract ? "Extracting Text..." : "Analyzing..."} 
         handleCheckBtnClick={handleImageAnalysis} 
         />
+        <ModelsOptions model={model} setModel={setModel} />
+    </div>
     )}
     </>
   )

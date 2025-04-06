@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import CheckButton from "./CheckButton";
+import ModelsOptions from "./ModelsOptions";
 
 const borderColors = {
     "": "border-gray-500/50",
@@ -35,18 +36,7 @@ export default function TextInput({loading, result, setResult, setMessage, handl
         {!result && text && (
             <div className="relative flex items-center">
                 <CheckButton loading={loading} handleCheckBtnClick={() => handleCheckBtnClick(text)} />
-
-                <div className="absolute left-full ml-2">
-                    <select
-                        id="model"
-                        value={model}
-                        className="text-[10px] outline-0 bg-background-card hover:bg-background-card-hover border border-border p-1 rounded-lg"
-                        onChange={(e) => setModel(e.target.value)}
-                    >
-                        <option value="deepseek">Deepseek</option>
-                        <option value="gemini">Gemini</option>
-                    </select>
-                </div>
+                <ModelsOptions model={model} setModel={setModel} />
             </div>
         )}
     </>

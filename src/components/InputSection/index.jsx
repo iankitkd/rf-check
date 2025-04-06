@@ -68,6 +68,8 @@ export default function InputWindow({setMessage}) {
             setResult={setResult}
             setMessage={setMessage}
             handleCheckBtnClick={handleCheckBtnClick}
+            model={model}
+            setModel={setModel}
             />
         )}
         
