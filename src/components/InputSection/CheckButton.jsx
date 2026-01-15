@@ -5,7 +5,7 @@ export default function CheckButton({loading, loadingText="Analyzing...", handle
   return (
     <div>
         <button 
-        className="py-2 px-3 rounded-lg bg-button hover:bg-button-hover text-button-text"
+        className="py-2 px-8 text-lg rounded-lg bg-button hover:bg-button-hover text-button-text"
         onClick={handleCheckBtnClick}
         disabled={loading}
         >

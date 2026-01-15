@@ -34,9 +34,9 @@ export default function TextInput({loading, result, setResult, setMessage, handl
         </div>
 
         {!result && text && (
-            <div className="relative flex items-center">
+            <div className="relative flex flex-col items-center justify-center py-2 gap-2">
+                <ModelsOptions model={model} setModel={setModel} loading={loading} />
                 <CheckButton loading={loading} handleCheckBtnClick={() => handleCheckBtnClick(text)} />
-                <ModelsOptions model={model} setModel={setModel} />
             </div>
         )}
     </>

@@ -65,11 +65,11 @@ export default function ImageInput({loading, result, setResult, setMessage, hand
   return (
     <>
     <div className={`w-full h-full max-w-[90%] md:max-w-[70%] max-h-[55%] py-2 bg-background-card relative border-2 border-gray-500/50 rounded-lg ${borderColors[result]}`}>
-        <label htmlFor="file" className={`flex justify-center ${image && "absolute -bottom-20 left-1/2 -translate-x-1/2 text-xs opacity-70"}`}>
-            <h2 className="bg-background hover:bg-background-card-hover border border-border shadow-lg w-fit p-2 rounded-lg cursor-pointer">
+        <label htmlFor="file" className={`flex justify-center ${image && "absolute bottom-2 right-2 text-xs opacity-90"}`}>
+            <h2 className="bg-background hover:bg-background-card-hover border border-border shadow-lg w-fit px-4 py-3 rounded-lg cursor-pointer">
                 {!image ? "Choose Image" : "Change Image"}
             </h2>
-            <input type="file" id="file" onChange={handleFileChange} hidden />
+            <input type="file" id="file" accept="image/*" onChange={handleFileChange} hidden />
         </label>
         { image && (
             <div className="p-2 w-full h-full flex items-center justify-center">
@@ -83,13 +83,13 @@ export default function ImageInput({loading, result, setResult, setMessage, hand
     </div>
 
     { image && !result && (
-    <div className="relative flex items-center">
+    <div className="relative flex flex-col items-center justify-center gap-2 py-2">
+        <ModelsOptions model={model} setModel={setModel} loading={loading} />
         <CheckButton 
         loading={loading || loadingExtract} 
         loadingText={loadingExtract ? "Extracting Text..." : "Analyzing..."} 
         handleCheckBtnClick={handleImageAnalysis} 
         />
-        <ModelsOptions model={model} setModel={setModel} />
     </div>
     )}
     </>

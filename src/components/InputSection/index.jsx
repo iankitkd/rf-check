@@ -1,18 +1,23 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Categories from "./Categories";
 import ImageInput from "./ImageInput";
 import TextInput from "./TextInput";
+import { modelsList } from "@/data";
 
 
 export default function InputWindow({setMessage}) {
     const [selectedMode, setSelectedMode] = useState("text");
-    const [model, setModel] = useState("gemini");
+    const [model, setModel] = useState(modelsList[0]);
     
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState("");
+
+    useEffect(() => {
+        setMessage(null);
+    }, [selectedMode]);
 
     const handleCheckBtnClick = async (text) => {
         if(!text.trim()) {
